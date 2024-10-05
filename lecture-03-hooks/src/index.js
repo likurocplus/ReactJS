@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 
 class ExComponent extends Component {
@@ -51,9 +51,35 @@ class ExComponent extends Component {
   }
 }
 
+
+//USE HOOK
+function ExampleHookComponent(props) {
+  // Khởi tạo state bằng useState
+  const [count, setCount] = useState(0);
+
+  // Sử dụng useEffect để thay cho lifecirle method
+  useEffect(()=>{
+    // Thực hiện sau khi component được render lần đầu tiên <=> componentDidMouting method
+    window.alert("componentDidMount");
+
+    // Clean up khi component unmouting <=> componentWillUnmount method
+    return () => {
+      window.alert("componentWillUnmount");
+    };
+    },[])
+
+    return (
+      <div>
+        <h1>Render Component</h1>
+        <h2>Count: {count}</h2>
+        <button onClick={()=>{setCount(count + 1)}}>Click to UPDATING</button>
+      </div>
+    )
+}
+
 const rootElement = ReactDOM.createRoot(document.getElementById("root"));
 rootElement.render(
   <React.StrictMode>
-    <ExComponent></ExComponent>
+    <ExampleHookComponent></ExampleHookComponent>
   </React.StrictMode>
 );
